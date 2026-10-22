@@ -3,379 +3,416 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HOTEL ECLIPSE | Escape matemático</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Eclipse — Escape matemático</title>
 <style>
-:root{
-  --gold:#d6b477;--red:#a83b43;--ink:#080a12;
-  --panel:#151823;--muted:#c0bfd0;--line:#424050;
-}
+:root{--gold:#c5a46d;--red:#791e27;--paper:#e7dcc5;--muted:#b7ad9b;--panel:rgba(13,13,15,.92)}
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--ink);color:#f5f0e8;
-  font-family:Georgia,"Times New Roman",serif;min-height:100vh;
-}
-body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
-  background:radial-gradient(ellipse at top,#292038 0%,#0b0c14 65%);
-}
-button,input{font:inherit}
-button{cursor:pointer}
-.shell{max-width:1050px;margin:auto;padding:24px 18px 50px}
-header{text-align:center;padding:20px 0 25px}
-.eyebrow{letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-size:12px}
-h1{font-size:clamp(38px,8vw,76px);letter-spacing:5px;margin:12px 0 5px}
-.subtitle{color:var(--muted);font-style:italic;line-height:1.6}
-.rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:20px 0}
-.panel{
-  background:rgba(21,24,35,.94);border:1px solid var(--line);
-  border-radius:12px;padding:22px;margin:15px 0;
-  box-shadow:0 15px 40px #0005;
-}
-h2{color:var(--gold);margin-top:0;font-size:26px}
-h3{margin:8px 0;color:#f6e8cb}
-p{line-height:1.65}
-.muted{color:var(--muted)}
-.small{font-size:13px}
-button{
-  background:var(--gold);color:#17121a;border:0;border-radius:6px;
-  padding:12px 17px;font-weight:bold;transition:.2s;
-}
-button:hover{filter:brightness(1.12);transform:translateY(-1px)}
-button.secondary{background:#292b39;color:#f4e8d1;border:1px solid #595164}
-button.danger{background:#6e2934;color:white}
-button:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+body{margin:0;background:#08090b;color:var(--paper);font-family:Georgia,'Times New Roman',serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,.78) 100%);z-index:4}
+button,input{font:inherit}button{cursor:pointer}
+.shell{max-width:1120px;margin:auto;padding:22px 18px 50px;position:relative;z-index:1}
+header{text-align:center;padding:20px 0 24px;border-bottom:1px solid #6b5134}
+.eyebrow{letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-size:.72rem}
+h1{font-size:clamp(2.5rem,7vw,5.5rem);letter-spacing:.08em;font-weight:normal;margin:9px 0 2px;text-shadow:0 0 22px #9d2525}
+header p{color:var(--muted);font-style:italic;margin:10px auto 0;max-width:620px;line-height:1.6}
+.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0;color:var(--muted);font:.8rem Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.progress{height:4px;background:#292523;flex:1;min-width:100px}
+.progress span{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+.card{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);background:var(--panel);border:1px solid #514332;box-shadow:0 20px 70px #000;min-height:500px}
+.visual{min-height:420px;position:relative;overflow:hidden;background:#171411}
+.visual img{position:absolute;width:100%;height:100%;object-fit:cover;filter:brightness(.58) saturate(.68) sepia(.18);inset:0}
+.visual:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),transparent 48%,rgba(0,0,0,.18))}
+.image-label{position:absolute;z-index:1;bottom:24px;left:24px;right:24px}
+.image-label small{letter-spacing:.28em;color:var(--gold);text-transform:uppercase}
+.image-label h2{font-size:2rem;font-weight:normal;margin:7px 0 0}
+.content{padding:clamp(22px,4vw,42px);display:flex;flex-direction:column;justify-content:center}
+.tag{color:var(--gold);letter-spacing:.2em;text-transform:uppercase;font:.72rem Arial,sans-serif}
+.story{line-height:1.65;color:#d0c5b1}
+.equation{font-size:clamp(1.7rem,4vw,2.6rem);text-align:center;margin:24px 0;color:#fff2d6;letter-spacing:.04em}
+.answer-row{display:flex;gap:9px}
+.answer-row input{width:100%;min-width:0;background:#111;border:1px solid #6a5842;color:white;padding:14px;font-size:1.1rem;outline:none}
+.btn{border:1px solid var(--gold);background:#33251b;color:#f4e5c8;padding:13px 17px;transition:.2s}
+.btn:hover{background:#60412b}
+.btn.primary{background:#6f2027;border-color:#a9574d}
+.btn.primary:hover{background:#8d2b32}
+.hint{min-height:30px;color:#c9ad7b;font-style:italic;font-size:.93rem;margin:14px 0 0;line-height:1.5}
+.feedback{min-height:24px;margin-top:12px;font:.9rem Arial,sans-serif}
+.feedback.good{color:#c6d5a3}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0}
+.choice{border:1px solid #65513a;background:#191614;color:var(--paper);padding:0;text-align:left;overflow:hidden}
+.choice img{display:block;width:100%;height:85px;object-fit:cover;filter:brightness(.6) sepia(.2)}
+.choice span{display:block;padding:10px;font-size:.95rem}
+.choice small{display:block;color:var(--gold);font:.65rem Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.choice.selected{outline:2px solid var(--gold);background:#35291d}
+.choice:disabled{opacity:.65;cursor:default}
+.smallnote{font:.8rem Arial,sans-serif;color:#b7ad9b;line-height:1.5}
 .hidden{display:none!important}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.stat{background:#0d0f18;padding:12px;border-radius:7px;text-align:center}
-.stat strong{display:block;color:var(--gold);font-size:22px;margin-bottom:4px}
-.progress{height:5px;background:#33313d;border-radius:8px;overflow:hidden;margin-top:12px}
-.progress div{height:100%;width:0;background:var(--gold);transition:width .3s}
-.scene{
-  width:100%;aspect-ratio:16/7;min-height:180px;max-height:360px;
-  object-fit:cover;display:block;border-radius:8px;border:1px solid #665346;
-  background:#17131e;
-}
-.room-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-.tag{font-size:12px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
-.story{font-size:17px}
-.equation{
-  text-align:center;font-size:clamp(27px,6vw,43px);color:#fff0cf;
-  padding:20px 8px;letter-spacing:1px;
-}
-.answer{width:100%;padding:14px;background:#090b12;color:white;border:1px solid #62566b;border-radius:6px;margin-top:8px}
-.answer:focus{outline:2px solid var(--gold)}
-.feedback{margin-top:12px;min-height:25px}
-.hint{background:#292331;border-left:3px solid var(--gold);padding:12px;margin-top:12px;color:#f3dfb8}
-.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-.choice{
-  text-align:left;background:#10121c;color:#f5f0e8;border:1px solid #51475a;
-  border-radius:8px;padding:15px;min-width:0;
-}
-.choice .emoji{font-size:32px;display:block;margin-bottom:9px}
-.choice p{font-size:13px;color:var(--muted)}
-.choice.selected{border:2px solid var(--gold);background:#292333}
-.choice:disabled{opacity:.5}
-.log{display:flex;flex-wrap:wrap;gap:7px}
-.log span{padding:7px 10px;border:1px solid #4b4555;border-radius:20px;font-size:12px}
-.log .done{border-color:#7a986e;color:#c7e7b6}
-footer{text-align:center;color:#817e90;font-size:12px;margin-top:28px;line-height:1.7}
-@media(max-width:650px){
-  .shell{padding:12px}
-  .panel{padding:16px}
-  .choices{grid-template-columns:1fr}
-  .choice{display:grid;grid-template-columns:45px 1fr;gap:10px}
-  .choice .emoji{grid-row:span 2}
-  .scene{aspect-ratio:4/3;min-height:150px}
-  h1{letter-spacing:2px}
+.overlay{position:fixed;inset:0;z-index:10;background:rgba(0,0,0,.92);display:grid;place-items:center;padding:20px}
+.modal{max-width:650px;width:100%;text-align:center;padding:clamp(25px,6vw,55px);border:1px solid var(--gold);background:linear-gradient(#211b18,#090909);box-shadow:0 0 90px #000}
+.modal h2{font-weight:normal;font-size:clamp(2rem,6vw,3.5rem);margin:8px 0}
+.modal p{line-height:1.7;color:var(--muted)}
+.footer{text-align:center;color:#72695d;font:.7rem Arial,sans-serif;letter-spacing:.16em;margin-top:22px;text-transform:uppercase}
+@media(max-width:720px){
+ .card{grid-template-columns:1fr}.visual{min-height:290px}.content{padding:24px}
+ .choices{gap:6px}.choice span{padding:7px;font-size:.84rem}
+ .choice img{height:72px}.answer-row{flex-direction:column}
+ .answer-row .btn{width:100%}
 }
 </style>
 </head>
 <body>
 <div class="shell">
 <header>
-  <div class="eyebrow">Una experiencia de misterio matemático</div>
-  <h1>HOTEL ECLIPSE</h1>
-  <div class="subtitle">Londres · Octubre de 1987 · 23:47 h</div>
-  <div class="rule"></div>
-  <p class="subtitle">«Diez habitaciones. Diez enigmas. Una sola salida.»</p>
+ <div class="eyebrow">Londres · 1987 · Expediente sellado</div>
+ <h1>HOTEL ECLIPSE</h1>
+ <p>Abrió sus puertas con una gala deslumbrante. Tres semanas después, todos desaparecieron. El edificio lleva décadas esperando a su último huésped.</p>
 </header>
 
-<section id="intro" class="panel">
-  <h2>La última noche</h2>
-  <p>La lluvia golpea las ventanas de un antiguo hotel londinense. Has encontrado la entrada, pero la puerta principal se cierra de golpe. Un reloj marca las 23:47.</p>
-  <p>Una voz sale de los altavoces: <em>«Para abandonar el Hotel Eclipse, deberás demostrar que mereces encontrar la salida. Resuelve los enigmas. Elige con cuidado. Aquí, cada decisión deja huella».</em></p>
-  <p class="muted">Reglas: cada habitación contiene un problema matemático. Puedes pedir una pista. Si introduces una respuesta incorrecta, la partida termina. En las habitaciones especiales, también tendrás que escoger un objeto que cambiará tu recorrido.</p>
-  <div class="actions">
-    <button id="startBtn">ENTRAR EN EL HOTEL</button>
-  </div>
-</section>
+<div class="topline">
+ <span id="roomCount">Habitación 1 de 10</span>
+ <div class="progress"><span id="progress"></span></div>
+ <span id="solvedCount">0 / 10</span>
+</div>
 
-<section id="game" class="hidden">
-  <div class="panel">
-    <div class="stats">
-      <div class="stat"><strong id="roomCount">1/10</strong><span class="small">Habitación</span></div>
-      <div class="stat"><strong id="score">0</strong><span class="small">Enigmas resueltos</span></div>
-      <div class="stat"><strong id="objectsCount">0</strong><span class="small">Objetos elegidos</span></div>
-    </div>
-    <div class="progress"><div id="progressBar"></div></div>
+<main class="card">
+ <div class="visual">
+  <img id="roomImage" src="habitacion_01.jpg" alt="Hotel londinense abandonado">
+  <div class="image-label">
+   <small id="roomKicker">Ala oeste · Habitación 101</small>
+   <h2 id="roomTitle">La nota bajo la almohada</h2>
   </div>
+ </div>
 
-  <div class="panel">
-    <div class="room-head">
-      <div>
-        <div class="tag" id="roomTag">Habitación 01</div>
-        <h2 id="roomTitle">El vestíbulo</h2>
-      </div>
-      <span class="tag" id="roomType">Enigma</span>
-    </div>
-    <img id="scene" class="scene" alt="Ilustración de la habitación del hotel">
-    <p class="story" id="story"></p>
-    <div class="equation" id="equation"></div>
-    <label for="answer" id="answerLabel">Escribe tu respuesta:</label>
-    <input id="answer" class="answer" type="text" autocomplete="off" placeholder="Tu respuesta...">
-    <div class="actions">
-      <button id="checkBtn">COMPROBAR</button>
-      <button id="hintBtn" class="secondary">PEDIR PISTA</button>
-    </div>
-    <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
-    <div id="hintBox" class="hint hidden"></div>
+ <section class="content">
+  <div class="tag" id="roomTag">Expediente 01</div>
+  <p class="story" id="story"></p>
+
+  <div id="puzzleArea">
+   <div class="equation" id="equation"></div>
+   <div class="answer-row">
+    <input id="answer" autocomplete="off" aria-label="Tu respuesta" placeholder="Escribe la solución…">
+    <button class="btn primary" id="submit">Resolver</button>
+   </div>
+   <div class="feedback" id="feedback" aria-live="polite"></div>
+   <div class="actions">
+    <button class="btn" id="hintBtn">Pista</button>
+    <button class="btn hidden" id="nextBtn">Continuar →</button>
+   </div>
+   <p class="hint" id="hint"></p>
   </div>
 
-  <div id="choicePanel" class="panel hidden">
-    <h2>Elige tu destino</h2>
-    <p id="choiceIntro">Has resuelto el enigma. Ahora debes escoger un objeto. Tu elección cambiará el orden de las próximas habitaciones.</p>
-    <div class="choices" id="choices"></div>
-    <div id="choiceFeedback" class="feedback"></div>
-    <button id="continueBtn" class="hidden">CONTINUAR</button>
+  <div id="choiceArea" class="hidden">
+   <p class="smallnote">Elige qué objeto inspeccionar primero. Tendrás que resolver los tres enigmas de esta habitación. Tu primera elección cambiará el orden de las habitaciones posteriores, pero no podrás saltarte ninguna.</p>
+   <div class="choices" id="choices"></div>
+   <div class="feedback" id="choiceFeedback"></div>
+   <div class="actions">
+    <button class="btn hidden" id="beginChoice">Inspeccionar objeto →</button>
+    <button class="btn hidden" id="finishChoice">Salir de la habitación →</button>
+   </div>
+   <p class="hint" id="choiceHint"></p>
   </div>
+ </section>
+</main>
+<div class="footer">No hay salida sin resolver el expediente · Hotel Eclipse</div>
+</div>
 
-  <div class="panel">
-    <h3>Tu recorrido</h3>
-    <div id="roomLog" class="log"></div>
-  </div>
-</section>
+<div class="overlay" id="intro">
+ <div class="modal">
+  <div class="eyebrow">Registro de huéspedes · 31 de octubre de 1987</div>
+  <h2>La recepción está vacía.</h2>
+  <p>La puerta principal se ha cerrado a tu espalda. Diez habitaciones conservan las últimas pistas de quienes estuvieron aquí. Resuelve cada ecuación para avanzar. Un error y el hotel te retendrá.</p>
+  <button class="btn primary" id="start">Entrar en el hotel</button>
+ </div>
+</div>
 
-<section id="ending" class="panel hidden">
-  <div class="eyebrow">23:59 h</div>
-  <h2 id="endingTitle">La salida</h2>
-  <img id="endingScene" class="scene" alt="La salida del Hotel Eclipse">
+<div class="overlay hidden" id="ending">
+ <div class="modal">
+  <div class="eyebrow">Expediente completado</div>
+  <h2>La puerta se abre.</h2>
   <p id="endingText"></p>
-  <div class="actions"><button id="restartBtn">VOLVER A JUGAR</button></div>
-</section>
+  <button class="btn primary" id="restart">Volver a jugar</button>
+ </div>
+</div>
 
-<footer>
-  HOTEL ECLIPSE · ESCAPE MATEMÁTICO<br>
-  Mantén la calma. Observa los detalles. Confía en las matemáticas.
-</footer>
+<div class="overlay hidden" id="gameover">
+ <div class="modal">
+  <div class="eyebrow">Sistema de seguridad activado</div>
+  <h2>GAME OVER</h2>
+  <p>El hotel ha detectado una respuesta incorrecta. La puerta se cierra y las luces se apagan. Tendrás que volver a empezar.</p>
+  <button class="btn primary" id="tryAgain">Intentarlo de nuevo</button>
+ </div>
 </div>
 
 <script>
-"use strict";
-
-/* Ilustraciones SVG integradas: no necesitan archivos ni enlaces externos. */
-function roomImage(index, ending=false){
-  const palettes=[
-    ["#191c2e","#6f5367","#c9a36b"],
-    ["#101d2c","#43586b","#d5b16e"],
-    ["#211522","#73454b","#c6a06a"],
-    ["#101d22","#3b665f","#c6b88a"],
-    ["#211a2d","#5b496f","#d9b66e"],
-    ["#261923","#75464b","#e0b778"],
-    ["#111b2c","#344c68","#c6a36b"],
-    ["#201a28","#62506d","#d8b477"],
-    ["#111e22","#42635b","#c5aa76"],
-    ["#201b2b","#70504e","#e4c58b"]
-  ];
-  const c=ending?["#101a27","#496b70","#ffe3a0"]:palettes[index%palettes.length];
-  const moonX=ending?450:340+(index%4)*42;
-  const stars=Array.from({length:18},(_,i)=>{
-    const x=(i*79+index*31)%900, y=(i*43+index*17)%180;
-    return `<circle cx="${x}" cy="${y}" r="${i%3===0?2:1}" fill="#f4dfb3" opacity=".7"/>`;
-  }).join("");
-  const lampX=ending?735:690-(index%3)*35;
-  const art=`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 390">
-    <defs>
-      <linearGradient id="wall" x2="0" y2="1"><stop stop-color="${c[1]}"/><stop offset="1" stop-color="${c[0]}"/></linearGradient>
-      <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#493b42"/><stop offset="1" stop-color="#100e18"/></linearGradient>
-      <radialGradient id="glow"><stop stop-color="${c[2]}" stop-opacity=".5"/><stop offset="1" stop-color="${c[2]}" stop-opacity="0"/></radialGradient>
-    </defs>
-    <rect width="900" height="390" fill="url(#wall)"/>
-    ${stars}
-    <ellipse cx="${lampX}" cy="205" rx="220" ry="190" fill="url(#glow)"/>
-    <path d="M0 0H900V280L450 235 0 280Z" fill="#090d17" opacity=".22"/>
-    <path d="M0 280L450 225 900 280V390H0Z" fill="url(#floor)"/>
-    <path d="M0 310L450 245 900 310M0 350L450 285 900 350M180 390L450 245M450 390L450 245M720 390L450 245" stroke="#c5a67a" stroke-opacity=".18" fill="none"/>
-    <rect x="55" y="38" width="205" height="202" fill="#0c101c" stroke="${c[2]}" stroke-width="5"/>
-    <rect x="67" y="50" width="181" height="178" fill="#17283c"/>
-    <path d="M157 50V228M67 139H248" stroke="${c[2]}" stroke-width="4"/>
-    <circle cx="${moonX}" cy="91" r="32" fill="${c[2]}"/>
-    <circle cx="${moonX+13}" cy="80" r="31" fill="#17283c"/>
-    <path d="M83 210L120 165 151 193 192 126 230 210Z" fill="#101923"/>
-    <rect x="315" y="50" width="270" height="135" rx="3" fill="#11121d" stroke="#927654" stroke-width="5"/>
-    <rect x="326" y="61" width="248" height="113" fill="${c[1]}"/>
-    <path d="M338 163L392 94 435 145 481 82 562 163Z" fill="#151521"/>
-    <circle cx="450" cy="97" r="20" fill="${c[2]}" opacity=".8"/>
-    <rect x="640" y="178" width="100" height="112" fill="#120f18" stroke="#7c624c" stroke-width="5"/>
-    <path d="M650 290V210Q690 165 730 210V290" fill="#252032" stroke="#b49a70" stroke-width="3"/>
-    <circle cx="${lampX}" cy="165" r="8" fill="${c[2]}"/>
-    <path d="M${lampX} 165V225" stroke="#b79b6c" stroke-width="4"/>
-    <path d="M${lampX-28} 225H${lampX+28}L${lampX+15} 193H${lampX-15}Z" fill="#c4a16c"/>
-    <path d="M80 280V248L130 230 180 248V280Z" fill="#5e4145" stroke="#bd9c6b" stroke-width="3"/>
-    <path d="M65 280H195V300H65Z" fill="#2b202c"/>
-    <rect x="0" y="0" width="900" height="390" fill="none" stroke="#07080d" stroke-width="18"/>
-    <text x="450" y="365" font-family="Georgia,serif" font-size="15" letter-spacing="5" text-anchor="middle" fill="#e5c998" opacity=".8">${ending?"THE EXIT": "HOTEL ECLIPSE · 1987"}</text>
-  </svg>`;
-  return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(art);
-}
-
-const rooms=[
- {title:"El vestíbulo",story:"El recepcionista ha desaparecido. Sobre el mostrador, una nota: «Solo quien resuelva la primera clave podrá cruzar el vestíbulo».",eq:"2x + 6 = 20",answer:"7",hint:"Resta 6 a ambos lados y después divide entre 2.",type:"Enigma"},
- {title:"El salón de los espejos",story:"Los espejos reflejan una ecuación en sentido inverso. Una voz susurra: «Aísla la incógnita y verás la verdad».",eq:"3x − 5 = 16",answer:"7",hint:"Suma 5 a ambos lados. Después divide entre 3.",type:"Elección"},
- {title:"La biblioteca sellada",story:"Un libro se abre solo cuando dices el número correcto. Las páginas huelen a polvo y secretos.",eq:"x ÷ 3 + 2 = 6",answer:"12",hint:"Resta 2 primero. Luego multiplica por 3.",type:"Enigma"},
- {title:"El comedor vacío",story:"La mesa está puesta para diez personas, pero solo hay una silla ocupada: la tuya. Una tarjeta contiene el siguiente código.",eq:"4x = 36",answer:"9",hint:"Divide ambos lados de la ecuación entre 4.",type:"Enigma"},
- {title:"La habitación roja",story:"Tras una cortina carmesí hay tres objetos. Una inscripción dice: «Tu elección decidirá qué pasillos encontrarás primero».",eq:"5x + 4 = 39",answer:"7",hint:"Resta 4 a ambos lados y divide el resultado entre 5.",type:"Elección"},
- {title:"El pasillo de los relojes",story:"Todos los relojes se han detenido a las 23:47. El mecanismo de la puerta necesita una última cifra.",eq:"2(x + 3) = 18",answer:"6",hint:"Divide primero entre 2. Después resta 3.",type:"Enigma"},
- {title:"El invernadero nocturno",story:"Las plantas han invadido el cristal. Entre las hojas encuentras una pizarra con una ecuación.",eq:"7x − 8 = 27",answer:"5",hint:"Suma 8 a ambos lados y divide entre 7.",type:"Enigma"},
- {title:"La suite de la luna",story:"Una lámpara ilumina tres objetos antiguos. Debes elegir uno antes de entrar en el último tramo del hotel.",eq:"2x² = 32",answer:"4",hint:"Divide entre 2 y busca la raíz cuadrada positiva: la cerradura pide el valor positivo.",type:"Elección"},
- {title:"El ascensor antiguo",story:"El ascensor espera con las puertas abiertas. Una placa metálica muestra el último desafío antes de la salida.",eq:"(x − 2) ÷ 2 = 4",answer:"10",hint:"Multiplica ambos lados por 2 y después suma 2.",type:"Enigma"},
- {title:"La puerta del eclipse",story:"Has llegado al final. El reloj está a punto de marcar la medianoche. Resuelve el último código para abrir la puerta.",eq:"6x + 12 = 72",answer:"10",hint:"Resta 12 a ambos lados y divide entre 6.",type:"Final"}
+const PHOTOS = [
+ "habitacion_01.jpg",
+ "habitacion_02.jpg",
+ "habitacion_03.jpg",
+ "habitacion_04.jpg",
+ "habitacion_05.jpg",
+ "habitacion_06.jpg",
+ "habitacion_07.jpg",
+ "habitacion_08.jpg",
+ "habitacion_09.jpg",
+ "habitacion_10.jpg"
 ];
 
-const choiceSets=[
- [
-  {emoji:"🗝️",name:"La llave de plata",desc:"Prefiere pasillos tranquilos y antiguos.",order:[2,3,4,5,6,7,8,9]},
-  {emoji:"🕯️",name:"La vela negra",desc:"Te guía hacia las estancias más oscuras.",order:[6,7,2,3,4,5,8,9]},
-  {emoji:"🧭",name:"La brújula",desc:"Busca una ruta equilibrada por el hotel.",order:[3,2,6,4,5,7,8,9]}
- ],
- [
-  {emoji:"📿",name:"El medallón",desc:"Prioriza las habitaciones antiguas.",order:[5,6,7,2,3,8,9]},
-  {emoji:"🃏",name:"La carta",desc:"Te conduce por pasillos imprevisibles.",order:[7,2,5,6,3,8,9]},
-  {emoji:"🔔",name:"La campanilla",desc:"Intenta mantener el recorrido ordenado.",order:[2,3,5,6,7,8,9]}
- ],
- [
-  {emoji:"🕰️",name:"El reloj detenido",desc:"Te acerca a las puertas del tiempo.",order:[8,9,6,7]},
-  {emoji:"🪞",name:"El espejo antiguo",desc:"Busca el camino más misterioso.",order:[6,8,9,7]},
-  {emoji:"🗝️",name:"La llave dorada",desc:"Te lleva directamente hacia la salida.",order:[8,6,7,9]}
- ]
+const rooms = [
+ {
+  title:"La nota bajo la almohada",
+  kicker:"Ala oeste · Habitación 101",
+  story:"La habitación parece recién preparada, pero el polvo cubre el teléfono. Bajo la almohada encuentras una nota: «Solo quien despeje la incógnita podrá marcharse».",
+  eq:"2x + 3 = 11",
+  answers:["4"],
+  hint:"Resta 3 a ambos lados y después divide entre 2.",
+  type:"single"
+ },
+ {
+  title:"Tres objetos, tres secretos",
+  kicker:"Ala oeste · Habitación 102",
+  story:"Un espejo empañado, una mesilla cerrada y una maleta antigua parecen esperar una decisión. Los tres objetos contienen una pista y ninguno puede quedarse sin inspeccionar.",
+  type:"choice",
+  tasks:[
+   {label:"La mesilla",sub:"Cajón cerrado",eq:"x² − 5x + 6 = 0",answers:["2","3","2,3","3,2"],hint:"Busca dos números que multiplicados den 6 y sumados den 5."},
+   {label:"El espejo",sub:"Cristal agrietado",eq:"3x − 8 = 10",answers:["6"],hint:"Suma 8 a ambos lados y divide entre 3."},
+   {label:"La maleta",sub:"Equipaje sin dueño",eq:"x² − 9 = 0",answers:["3","-3","±3","3,-3","-3,3"],hint:"Si x² = 9, hay dos soluciones: una positiva y otra negativa."}
+  ]
+ },
+ {
+  title:"Los huéspedes desaparecidos",
+  kicker:"Segundo piso · Pasillo norte",
+  story:"Los cuadros de los huéspedes han sido arrancados. En el libro de mantenimiento aparece una ecuación escrita con tinta fresca, aunque la tinta lleva décadas seca.",
+  eq:"5x − 7 = 18",answers:["5"],
+  hint:"Suma 7 a ambos lados y divide entre 5.",type:"single"
+ },
+ {
+  title:"El libro de registro",
+  kicker:"Biblioteca · Archivo privado",
+  story:"La biblioteca huele a lluvia y cuero viejo. En el registro de entradas, una firma se repite hasta formar una ecuación cúbica perfecta.",
+  eq:"x³ − 3x² + 3x − 1 = 0",answers:["1"],
+  hint:"Es el desarrollo de (x − 1)³.",type:"single"
+ },
+ {
+  title:"La última cena",
+  kicker:"Salón de banquetes · Planta baja",
+  story:"La mesa está puesta para diez, pero nadie se sentó. Un candelabro, un plato y una copa reflejan una luz que no existe. Examina los tres objetos.",
+  type:"choice",
+  tasks:[
+   {label:"Candelabro",sub:"Llama inmóvil",eq:"(x + 1)/3 + (x − 2)/6 = 1",answers:["2"],hint:"Multiplica toda la ecuación por 6 para eliminar denominadores."},
+   {label:"El plato",sub:"Porcelana agrietada",eq:"5x − 7 = 3",answers:["2"],hint:"Suma 7 a ambos lados y divide entre 5."},
+   {label:"La copa",sub:"Cristal empañado",eq:"x² − 16 = 0",answers:["4","-4","±4","4,-4","-4,4"],hint:"x² = 16 tiene una solución positiva y otra negativa."}
+  ]
+ },
+ {
+  title:"La puerta de hierro",
+  kicker:"Sótano · Sala de calderas",
+  story:"Las tuberías golpean como si alguien llamara desde dentro de las paredes. La cerradura numérica acepta una respuesta exacta, no una aproximación.",
+  eq:"x⁴ − 5x² + 4 = 0",
+  answers:["-2","-1","1","2","-2,-1,1,2","±1,±2"],
+  hint:"Haz el cambio y = x². Factoriza y² − 5y + 4.",type:"single"
+ },
+ {
+  title:"El reflejo que no encaja",
+  kicker:"Salón de espejos · Tercer piso",
+  story:"La ciudad aparece al otro lado de las ventanas, pero el Big Ben marca una hora imposible. Una voz te dicta una raíz cuadrada.",
+  eq:"√(x + 3) = 5",answers:["22"],
+  hint:"Eleva ambos lados al cuadrado: x + 3 = 25.",type:"single"
+ },
+ {
+  title:"El expediente secreto",
+  kicker:"Despacho del director · Planta 4",
+  story:"Tras el escritorio hay tres documentos marcados con símbolos. Cada uno guarda un polinomio distinto. El director dejó escrito: «Todos deben abrirse».",
+  type:"choice",
+  tasks:[
+   {label:"Carpeta negra",sub:"Símbolo de luna",eq:"x⁴ − 13x² + 36 = 0",answers:["-3","-2","2","3","-3,-2,2,3","±2,±3"],hint:"Sustituye y = x² y factoriza y² − 13y + 36."},
+   {label:"Carpeta roja",sub:"Símbolo de llave",eq:"x³ − 4x = 0",answers:["-2","0","2","-2,0,2","±2,0"],hint:"Saca factor común x y luego factoriza x² − 4."},
+   {label:"Carpeta azul",sub:"Símbolo de ojo",eq:"x² − 25 = 0",answers:["5","-5","±5","5,-5","-5,5"],hint:"Es una diferencia de cuadrados: x² − 5²."}
+  ]
+ },
+ {
+  title:"Los números en los escalones",
+  kicker:"Escalera principal · Torre este",
+  story:"La escalera sube más allá de la altura del edificio. Los números grabados en los peldaños forman una ecuación de quinto grado que parece imposible hasta que buscas factor común.",
+  eq:"x⁵ − 5x³ + 4x = 0",
+  answers:["-2","-1","0","1","2","-2,-1,0,1,2","±1,±2,0"],
+  hint:"Saca x como factor común y después usa y = x².",type:"single"
+ },
+ {
+  title:"La última cerradura",
+  kicker:"Vestíbulo · Puerta principal",
+  story:"La recepción está exactamente como el día de la inauguración: flores secas, latón ennegrecido y un reloj detenido. La última cerradura exige todas las raíces reales del polinomio.",
+  eq:"x⁵ − 2x⁴ − 7x³ + 8x² + 12x = 0",
+  answers:["-2","-1","0","2","3","-2,-1,0,2,3"],
+  hint:"Saca x como factor común. Las raíces enteras son divisores del término independiente.",type:"single"
+ }
 ];
 
-let route=[],pos=0,solved=new Set(),objects=[],hintsUsed=0,chosen=null,ended=false;
-const $=id=>document.getElementById(id);
-function normalize(s){return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(",",".");}
-function show(id){$(id).classList.remove("hidden")}
-function hide(id){$(id).classList.add("hidden")}
+const $ = id => document.getElementById(id);
+let route=[0,1,2,3,4,5,6,7,8,9];
+let pos=0;
+let solved=new Set();
+let taskOrder=[],taskPos=0,firstChoice=null,activeTask=null;
 
-function startGame(){
- route=[0,1,2,3,4,5,6,7,8,9];pos=0;solved.clear();objects=[];hintsUsed=0;chosen=null;ended=false;
- hide("intro");hide("ending");show("game");renderRoom();
+function normalize(s){
+ return s.toLowerCase().replace(/\s/g,"").replace(/x=/g,"")
+  .replace(/[{}]/g,"").replace(/−/g,"-")
+  .replace(/²/g,"^2").replace(/³/g,"^3")
+  .replace(/⁴/g,"^4").replace(/⁵/g,"^5");
 }
-function renderLog(){
- $("roomLog").innerHTML=rooms.map((r,i)=>`<span class="${solved.has(i)?"done":""}">${solved.has(i)?"✓":"○"} ${String(i+1).padStart(2,"0")}</span>`).join("");
+function current(){return rooms[route[pos]]}
+function setImg(idx){$("roomImage").src=PHOTOS[idx]}
+function updateTop(){
+ $("roomCount").textContent=`Habitación ${pos+1} de 10`;
+ $("solvedCount").textContent=`${solved.size} / 10`;
+ $("progress").style.width=`${solved.size*10}%`;
 }
-function renderRoom(){
- const id=route[pos],r=rooms[id];
- $("roomCount").textContent=(pos+1)+"/10";
- $("score").textContent=solved.size;
- $("objectsCount").textContent=objects.length;
- $("progressBar").style.width=(solved.size/10*100)+"%";
- $("roomTag").textContent="Habitación "+String(id+1).padStart(2,"0");
- $("roomTitle").textContent=r.title;
- $("roomType").textContent=r.type;
- $("scene").src=roomImage(id);
- $("story").textContent=r.story;
- $("equation").textContent=r.eq;
- $("answer").value="";
- $("answer").disabled=false;
- $("checkBtn").disabled=false;
+function render(){
+ const r=current();
+ $("hint").textContent="";
  $("feedback").textContent="";
- $("hintBox").textContent="";
- hide("hintBox");hide("choicePanel");
- $("answerLabel").textContent="Escribe el valor de x:";
- $("answer").placeholder="Valor de x...";
- renderLog();
- $("answer").focus();
-}
-function checkAnswer(){
- if(ended)return;
- const id=route[pos],r=rooms[id],val=normalize($("answer").value);
- if(!val){$("feedback").textContent="Escribe una respuesta antes de continuar.";return;}
- if(val===normalize(r.answer)){
-  solved.add(id);
-  $("score").textContent=solved.size;
-  $("feedback").textContent="Correcto. La cerradura se abre lentamente…";
-  $("feedback").style.color="#bde5a8";
-  $("answer").disabled=true;$("checkBtn").disabled=true;
-  renderLog();
-  if([1,4,7].includes(id)){showChoices(id);return;}
-  setTimeout(nextRoom,650);
- }else{
-  $("feedback").style.color="#ff9696";
-  $("feedback").textContent="Respuesta incorrecta. El hotel ha detectado el error. GAME OVER.";
-  $("answer").disabled=true;$("checkBtn").disabled=true;
-  setTimeout(()=>finish(false),900);
+ $("feedback").className="feedback";
+ $("nextBtn").classList.add("hidden");
+ $("submit").classList.remove("hidden");
+ $("answer").disabled=false;
+ $("answer").value="";
+ $("roomTitle").textContent=r.title;
+ $("roomKicker").textContent=r.kicker;
+ $("roomTag").textContent=`Expediente ${String(route[pos]+1).padStart(2,"0")}`;
+ $("story").textContent=r.story;
+ setImg(route[pos]);
+ updateTop();
+ $("puzzleArea").classList.toggle("hidden",r.type==="choice");
+ $("choiceArea").classList.toggle("hidden",r.type!=="choice");
+ if(r.type==="choice")setupChoice(r);
+ else{
+  $("equation").textContent=r.eq;
+  $("hintBtn").disabled=false;
  }
 }
-function showChoices(id){
- chosen=null;
- const set=choiceSets[[1,4,7].indexOf(id)];
+function setupChoice(r){
+ taskOrder=[0,1,2];taskPos=0;firstChoice=null;
  $("choices").innerHTML="";
- set.forEach((item,i)=>{
-  const b=document.createElement("button");b.className="choice";
-  b.innerHTML=`<span class="emoji">${item.emoji}</span><strong>${item.name}</strong><p>${item.desc}</p>`;
-  b.onclick=()=>{
-   chosen=i;
-   [...$("choices").children].forEach((el,j)=>el.classList.toggle("selected",j===i));
-   $("choiceFeedback").textContent="Has elegido: "+item.name+".";
-   $("continueBtn").classList.remove("hidden");
-  };
+ r.tasks.forEach((t,i)=>{
+  const b=document.createElement("button");
+  b.className="choice";
+  b.innerHTML=`<img src="${PHOTOS[route[pos]]}" alt=""><span><small>${t.sub}</small>${t.label}</span>`;
+  b.onclick=()=>selectChoice(i);
+  b.dataset.i=i;
   $("choices").appendChild(b);
  });
- $("choiceFeedback").textContent="";
- hide("continueBtn");show("choicePanel");
- $("choiceIntro").textContent="El enigma está resuelto. Elige uno de los tres objetos: cambiará el orden de las habitaciones que te quedan.";
+ $("choiceFeedback").textContent="Elige un objeto para comenzar.";
+ $("beginChoice").classList.add("hidden");
+ $("finishChoice").classList.add("hidden");
+ $("choiceHint").textContent="";
 }
-function nextRoom(){
- if(ended)return;
- if(solved.size===10){finish(true);return;}
+function selectChoice(i){
+ if(firstChoice!==null)return;
+ firstChoice=i;
+ taskOrder=[i,...[0,1,2].filter(n=>n!==i)];
+ $("choices").querySelectorAll("button").forEach((b,j)=>{
+  b.classList.toggle("selected",j===i);
+  b.disabled=true;
+ });
+ $("choiceFeedback").textContent=`Primero inspeccionarás: ${current().tasks[i].label}. Después resolverás los otros dos objetos.`;
+ $("beginChoice").classList.remove("hidden");
+ $("beginChoice").onclick=beginChoice;
+}
+function beginChoice(){taskPos=0;loadTask()}
+function loadTask(){
+ activeTask=current().tasks[taskOrder[taskPos]];
+ $("choiceFeedback").textContent=`Objeto ${taskPos+1} de 3: ${activeTask.label}`;
+ $("choices").querySelectorAll("button").forEach(b=>b.classList.toggle("selected",Number(b.dataset.i)===taskOrder[taskPos]));
+ $("beginChoice").classList.add("hidden");
+ $("finishChoice").classList.add("hidden");
+ $("choiceHint").textContent=`Ecuación: ${activeTask.eq}. Usa la pista si la necesitas.`;
+ let old=$("choiceArea").querySelector(".task-answer");
+ if(old)old.remove();
+ const row=document.createElement("div");
+ row.className="answer-row task-answer";
+ row.innerHTML='<input id="taskAnswer" autocomplete="off" aria-label="Respuesta del objeto" placeholder="Escribe la solución…"><button class="btn primary" id="taskSubmit">Resolver objeto</button>';
+ $("choiceArea").insertBefore(row,$("choiceFeedback"));
+ $("taskSubmit").onclick=checkTask;
+ $("taskAnswer").onkeydown=e=>{if(e.key==="Enter")checkTask()};
+}
+function checkTask(){
+ const val=normalize($("taskAnswer").value);
+ if(!activeTask.answers.map(normalize).includes(val)){fail();return}
+ $("choiceFeedback").textContent="Correcto. El objeto revela su secreto.";
+ const row=$("choiceArea").querySelector(".task-answer");
+ if(row)row.remove();
+ taskPos++;
+ if(taskPos<3){
+  $("beginChoice").textContent="Siguiente objeto →";
+  $("beginChoice").classList.remove("hidden");
+  $("beginChoice").onclick=loadTask;
+ }else{
+  $("choiceHint").textContent="Has inspeccionado los tres objetos. La ruta del hotel ha cambiado.";
+  $("finishChoice").classList.remove("hidden");
+  $("finishChoice").onclick=finishChoiceRoom;
+ }
+}
+function finishChoiceRoom(){
+ const room=route[pos];
+ reorderRoute(room,firstChoice);
+ solved.add(room);
+ advanceRoom();
+}
+function checkSingle(){
+ const val=normalize($("answer").value);
+ if(!val)return;
+ const r=current();
+ if(!r.answers.map(normalize).includes(val)){fail();return}
+ $("feedback").textContent="La cerradura cede. Respuesta correcta.";
+ $("feedback").className="feedback good";
+ $("answer").disabled=true;
+ $("submit").classList.add("hidden");
+ $("nextBtn").classList.remove("hidden");
+ $("hintBtn").disabled=true;
+}
+function fail(){$("gameover").classList.remove("hidden")}
+function advanceRoom(){
  pos++;
- if(pos>=route.length){finish(true);return;}
- renderRoom();
+ if(pos>=route.length){
+  $("ending").classList.remove("hidden");
+  $("endingText").textContent="Has resuelto las diez habitaciones. El aire frío de Londres entra en el vestíbulo. Al mirar atrás, el Hotel Eclipse ya no está en la calle. Solo queda una placa de latón fechada en 1987.";
+  return;
+ }
+ render();
 }
-function continueChoice(){
- if(chosen===null){$("choiceFeedback").textContent="Debes elegir un objeto primero.";return;}
- const id=route[pos],set=choiceSets[[1,4,7].indexOf(id)],item=set[chosen];
- objects.push(item.name);
- const remaining=route.slice(pos+1).filter(n=>!solved.has(n));
- const preferred=item.order.filter(n=>remaining.includes(n));
- const rest=remaining.filter(n=>!preferred.includes(n));
- route=route.slice(0,pos+1).concat(preferred,rest);
- $("objectsCount").textContent=objects.length;
- hide("choicePanel");
- nextRoom();
+function reorderRoute(roomIdx,choice){
+ const pending=route.slice(pos+1).filter(i=>!solved.has(i));
+ const pref={
+  1:[[2,3,4,5,6,7,8,9],[4,3,5,2,6,7,8,9],[3,2,6,4,5,7,8,9]],
+  4:[[7,5,6,2,3,8,9],[2,7,6,3,8,5,9],[6,7,8,2,3,5,9]],
+  7:[[8,9,6,5,2,3,4],[5,6,9,8,2,3,4],[9,8,6,5,2,3,4]]
+ };
+ if(!pref[roomIdx])return;
+ const proposed=pref[roomIdx][choice]||pref[roomIdx][0];
+ const ordered=proposed.filter(i=>pending.includes(i));
+ pending.forEach(i=>{if(!ordered.includes(i))ordered.push(i)});
+ route=[...route.slice(0,pos+1),...ordered];
 }
-function giveHint(){
- if(ended)return;
- const id=route[pos];
- $("hintBox").textContent="PISTA: "+rooms[id].hint;
- show("hintBox");hintsUsed++;
+function advance(){solved.add(route[pos]);advanceRoom()}
+function reset(){
+ route=[0,1,2,3,4,5,6,7,8,9];pos=0;solved=new Set();
+ $("ending").classList.add("hidden");
+ $("gameover").classList.add("hidden");
+ $("intro").classList.remove("hidden");
+ render();
 }
-function finish(won){
- ended=true;hide("game");show("ending");
- $("endingTitle").textContent=won?"Has escapado del Hotel Eclipse":"GAME OVER";
- $("endingScene").src=roomImage(9,true);
- $("endingText").textContent=won
- ?`La puerta se abre justo antes de medianoche. Has resuelto los 10 enigmas y elegido ${objects.length} objetos. La lluvia ha cesado. Al mirar atrás, el hotel ya no está. ¿Habrá sido real?`
- :`El reloj marca las 23:48. Las puertas se cierran y las luces se apagan. Has resuelto ${solved.size} de los 10 enigmas. El hotel te concede otra oportunidad: estudia las pistas y vuelve a intentarlo.`;
-}
-$("startBtn").addEventListener("click",startGame);
-$("checkBtn").addEventListener("click",checkAnswer);
-$("hintBtn").addEventListener("click",giveHint);
-$("continueBtn").addEventListener("click",continueChoice);
-$("restartBtn").addEventListener("click",startGame);
-$("answer").addEventListener("keydown",e=>{if(e.key==="Enter")checkAnswer();});
+$("start").onclick=()=>$("intro").classList.add("hidden");
+$("submit").onclick=checkSingle;
+$("answer").onkeydown=e=>{if(e.key==="Enter")checkSingle()};
+$("nextBtn").onclick=advance;
+$("hintBtn").onclick=()=>{
+ const r=current();
+ $("hint").textContent=r.hint||"Inspecciona los objetos y resuelve sus ecuaciones.";
+};
+$("restart").onclick=reset;
+$("tryAgain").onclick=reset;
+render();
 </script>
 </body>
 </html>
